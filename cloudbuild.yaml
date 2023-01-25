@@ -1,6 +1,7 @@
 steps:
   # Run linter for go project
   - name: golang:1.16
+    id: linter-step
     env: ['GO111MODULE=off']
     args: ['go', 'vet', './...']
 
