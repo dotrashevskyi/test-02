@@ -1,4 +1,9 @@
 steps:
+  # Run linter for go project
   - name: golang:1.16
     env: ['GO111MODULE=off']
     args: ['go', 'vet', './...']
+
+  #Docker build
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '--file', 'Dockerfile', '-t', 'test-image']
