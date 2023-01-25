@@ -6,7 +6,7 @@ steps:
 
       #Docker build
   - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: sh
+    entrypoint: /bin/bash
     args:
       - '-c'
       - |  
