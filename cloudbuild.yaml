@@ -2,6 +2,5 @@ steps:
   - name: golang:1.16
     entrypoint: /bin/bash
     args:
-      - echo "Testing using VET"
       - go env -w GO111MODULE=off
       - go vet
