@@ -1,6 +1,6 @@
 steps:
   # Run linter for go project
-  - name: 'gcr.io/cloud-builders/go:alpine-1.16'
+  - name: 'gcr.io/cloud-builders/go:1.16'
     id: linter-step
     env: ['GO111MODULE=off']
     args: ['go', 'vet', './...']
