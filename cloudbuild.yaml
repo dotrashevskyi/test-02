@@ -10,7 +10,8 @@ steps:
     args:
       - '-c'
       - |  
-        if [[ "$BRANCH_NAME" == "main" || "$BRANCH_NAME" == "dev" && -z $TAG_NAME ]]; then
+        if [[ "$BRANCH_NAME" == "main" || "$BRANCH_NAME" == "dev" && -z $TAG_NAME ]] 
+        then
           dateOfImage=$(date '+%d-%m-%Y')
           tag=":$BRANCH_NAME-${dateOfImage}-$SHORT_SHA"
           echo "Running on default branch '$BRANCH_NAME': tag = '${tag}'"
