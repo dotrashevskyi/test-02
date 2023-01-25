@@ -25,14 +25,3 @@ steps:
         fi
         docker build --file Dockerfile --tag us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app${tag} . &&
         docker push us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app${tag}
-
-  #Notify on pipeline failure
-  - name: 'ubuntu'
-    entrypoint: /bin/bash
-    waitFor:
-      - linter-step
-      - build-push-image-step
-    args:
-      - '-c'
-      - |
-      - echo "Notification is sending..."
