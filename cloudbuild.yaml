@@ -5,8 +5,8 @@ steps:
     args: ['go', 'vet', './...']
 
       #Docker build
-  - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: sh
+  - name: 'ubuntu'
+    entrypoint: bash
     args:
       - '-c'
       - |  
@@ -18,4 +18,4 @@ steps:
           tag=":$TAG_NAME"
           echo "Running on branch '$BRANCH_NAME': tag = $tag"
         fi
-      - 'docker build --file Dockerfile --tag us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app:${tag} .'
+#      - 'docker build --file Dockerfile --tag us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app:${tag} .'
