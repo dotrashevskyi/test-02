@@ -9,4 +9,13 @@ steps:
     entrypoint: sh
     args:
       - '-c'
-      - 'docker build --file Dockerfile --tag us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app:$BRANCH_NAME-$(date +%d-%m-%Y)-$SHORT_SHA .'
+      - |  
+        if [[ "$BRANCH_NAME" == "main" || "$BRANCH_NAME" == "dev" && -z $TAG_NAME ]]; then
+          dateOfImage=$(date '+%d-%m-%Y')
+          tag=":$BRANCH_NAME-${dateOfImage}-$SHORT_SHA"
+          echo "Running on default branch '$BRANCH_NAME': tag = '${tag}'"
+        else
+          tag=":$TAG_NAME"
+          echo "Running on branch '$BRANCH_NAME': tag = $tag"
+        fi
+      - 'docker build --file Dockerfile --tag us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app:${tag} .'
