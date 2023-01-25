@@ -4,8 +4,9 @@ steps:
     env: ['GO111MODULE=off']
     args: ['go', 'vet', './...']
 
-  #Docker build
+      #Docker build
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build',
-           '--file', 'Dockerfile',
-           '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app:$BRANCH_NAME-${_DATE}-$SHORT_SHA', '.']
+    entrypoint: sh
+    args:
+      - '-c'
+      - 'docker build --file=Dockerfile -t us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app:$BRANCH_NAME-$(date +$%F)-$SHORT_SHA .'
