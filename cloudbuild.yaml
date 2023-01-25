@@ -6,4 +6,6 @@ steps:
 
   #Docker build
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '--file', 'Dockerfile', '-t', 'test-image', '.']
+    args: ['build',
+           '--file', 'Dockerfile',
+           '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app:$BRANCH_NAME-$(date +%d-%m-%Y)-$SHORT_SHA', '.']
