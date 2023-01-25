@@ -1,11 +1,15 @@
 steps:
   # Run linter for go project
-  - name: golang:1.16
+  - name: 'gcr.io/cloud-builders/go:alpine-1.16'
+    id: linter-step
     env: ['GO111MODULE=off']
     args: ['go', 'vet', './...']
 
-      #Docker build
+  #Docker build & push
   - name: 'gcr.io/cloud-builders/docker'
+    id: build-push-image-step
+    waitFor:
+      - linter-step
     entrypoint: /bin/bash
     args:
       - '-c'
@@ -21,3 +25,14 @@ steps:
         fi
         docker build --file Dockerfile --tag us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app${tag} . &&
         docker push us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app${tag}
+
+  #Notify on pipeline failure
+  - name: 'ubuntu'
+    entrypoint: /bin/bash
+    waitFor:
+      - linter-step
+      - build-push-image-step
+    args:
+      - '-c'
+      - |
+      - echo "Notification is sending..."
