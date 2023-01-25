@@ -6,4 +6,4 @@ steps:
 
   #Docker build
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '--file', 'Dockerfile', '-t', 'test-image']
+    args: ['build', '--file', 'Dockerfile', '-t', 'test-image', '.']
