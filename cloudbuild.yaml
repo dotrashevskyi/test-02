@@ -28,11 +28,16 @@ steps:
 
   #Deploy container
   - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: /bin/bash
+#    args:
+#      - 'compute'
+#      - 'ssh'
+#      - '--zone'
+#      - 'us-central1-a'
+#      - 'internship-test-instance'
+#      - '--project'
+#      - 'internship-166-375809'
     args:
-      - 'compute'
-      - 'ssh'
-      - '--zone'
-      - 'us-central1-a'
-      - 'internship-test-instance'
-      - '--project'
-      - 'internship-166-375809'
+      - '-c'
+      - |
+         gcloud compute ssh --zone us-central1-a internship-test-instance --project internship-166-375809
