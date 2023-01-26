@@ -30,5 +30,5 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - |
-        gcloud compute ssh --zone "us-central1-a" "internship-test-instance"  --project "internship-166-375809" &&
+        compute ssh --zone "us-central1-a" "internship-test-instance"  --project "internship-166-375809" &&
         echo 'This is vm's shell!'
