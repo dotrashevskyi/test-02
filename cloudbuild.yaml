@@ -25,3 +25,11 @@ steps:
         fi
         docker build --file Dockerfile --tag us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app${tag} . &&
         docker push us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app${tag}
+
+  #Deploy container
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - '-c'
+      - |
+        gcloud compute ssh --zone "us-central1-a" "internship-test-instance"  --project "internship-166-375809" &&
+        echo 'This is vm's shell!'
