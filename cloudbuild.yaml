@@ -46,7 +46,7 @@ steps:
         tag=$(cat /image_info_volume/file)
         gcloud compute ssh --zone us-central1-a internship-test-instance --project $PROJECT_ID --command "docker system prune -f -a;
         docker stop test-go-app;
-        docker run --rm -d -p 8000:8000 --name=test-go-app 'us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app${tag}'"
+        docker run --rm -d -p 8000:8000 --name=test-go-app '${_IMAGE_REPO_NAME}${tag}'"
     volumes:
       - name: tag-info
         path: '/image_info_volume'
