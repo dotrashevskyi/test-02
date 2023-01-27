@@ -1,15 +1,42 @@
 steps:
   # Run linter for go project
   - name: golang:1.16
-    id: linter-step
     env: ['GO111MODULE=off']
     args: ['go', 'vet', './...']
 
-  #Docker build & push
+  #Calculate Docker image tag
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: /bin/bash
+    args:
+      - '-c'
+      - |
+        if [[ "$BRANCH_NAME" == "main" || "$BRANCH_NAME" == "dev" && -z "$TAG_NAME" ]] 
+        then
+          dateOfImage=$(date '+%d-%m-%Y')
+          tag=":$BRANCH_NAME-${dateOfImage}-$SHORT_SHA"
+          echo "Running on default branch '$BRANCH_NAME': tag = '${tag}'"
+        else
+          tag=":$TAG_NAME"
+          echo "Running on branch '$BRANCH_NAME': tag = $tag"
+        fi
+        echo $tag > /image_info_volume/file
+    volumes:
+      - name: tag-info
+        path: '/image_info_volume'
+
+  #Read shared variable
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: /bin/bash
+    args:
+      - '-c'
+      - |
+        cat /image_info_volume/file
+    volumes:
+      - name: tag-info
+        path: '/image_info_volume'
+
+    #Docker build & push
   - name: 'gcr.io/cloud-builders/docker'
-    id: build-push-image-step
-    waitFor:
-      - linter-step
     entrypoint: /bin/bash
     args:
       - '-c'
@@ -29,14 +56,6 @@ steps:
   #Deploy container
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: /bin/bash
-#    args:
-#      - 'compute'
-#      - 'ssh'
-#      - '--zone'
-#      - 'us-central1-a'
-#      - 'internship-test-instance'
-#      - '--project'
-#      - 'internship-166-375809'
     args:
       - '-c'
       - |
