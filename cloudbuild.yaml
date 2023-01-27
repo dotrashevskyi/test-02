@@ -44,10 +44,9 @@ steps:
       - '-c'
       - |
         tag=$(cat /image_info_volume/file)
-        gcloud compute ssh --zone us-central1-a internship-test-instance --project internship-166-375809 --command 'docker system prune -f -a;
+        gcloud compute ssh --zone us-central1-a internship-test-instance --project internship-166-375809 --command "docker system prune -f -a;
         docker stop test-go-app;
-        echo "Running image 'test-go-app us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app${tag}' "
-        docker run --rm -d -p 8000:8000 --name=test-go-app us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app:main-27-01-2023-48690cc'
+        docker run --rm -d -p 8000:8000 --name=test-go-app 'us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app${tag}'"
     volumes:
       - name: tag-info
         path: '/image_info_volume'
