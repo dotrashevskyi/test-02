@@ -40,4 +40,6 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute ssh --zone us-central1-a internship-test-instance --project internship-166-375809 --command 'docker run --rm -d -p 8000:8000 --name=test-go-app us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app:2.1.1'
+        gcloud compute ssh --zone us-central1-a internship-test-instance --project internship-166-375809 --command 'docker system prune -f -a;
+        docker stop test-go-app;
+        docker run --rm -d -p 8000:8000 --name=test-go-app us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app:2.1.1'
