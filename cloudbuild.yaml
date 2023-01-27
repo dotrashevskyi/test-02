@@ -24,17 +24,6 @@ steps:
       - name: tag-info
         path: '/image_info_volume'
 
-  #Read shared variable
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: /bin/bash
-    args:
-      - '-c'
-      - |
-        cat /image_info_volume/file
-    volumes:
-      - name: tag-info
-        path: '/image_info_volume'
-
     #Docker build & push
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: /bin/bash
@@ -42,7 +31,7 @@ steps:
       - '-c'
       - |
         tag=$(cat /image_info_volume/file)
-        docker build --file Dockerfile --tag us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app${tag} . &&
+        docker build --file Dockerfile --tag us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app${tag} --build-arg VERSION=${tag} . &&
         docker push us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app${tag}
     volumes:
       - name: tag-info
@@ -54,6 +43,10 @@ steps:
     args:
       - '-c'
       - |
+        tag=$(cat /image_info_volume/file)
         gcloud compute ssh --zone us-central1-a internship-test-instance --project internship-166-375809 --command 'docker system prune -f -a;
         docker stop test-go-app;
-        docker run --rm -d -p 8000:8000 --name=test-go-app us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app:2.1.1'
+        docker run --rm -d -p 8000:8000 --name=test-go-app us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app${tag}'
+    volumes:
+      - name: tag-info
+        path: '/image_info_volume'

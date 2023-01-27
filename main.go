@@ -3,11 +3,12 @@ package main
 import (
 	"io"
 	"net/http"
-	"os"
+	"os";
 )
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "Hello world!")
+    message := "Hello world! This app version is: " + os.Getenv("APP_VERSION")
+	io.WriteString(w, message)
 }
 
 
