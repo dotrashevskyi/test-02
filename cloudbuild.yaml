@@ -52,4 +52,4 @@ steps:
         path: '/image_info_volume'
 
 substitutions:
-  _IMAGE_REPO_NAME: 'us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app'
+  _IMAGE_REPO_NAME: 'us-central1-docker.pkg.dev/${PROJECT_ID}/internship-repo/test-go-app'
