@@ -40,5 +40,4 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute ssh --zone us-central1-a internship-test-instance --project internship-166-375809 &&
-        docker images
+        gcloud compute ssh --zone us-central1-a internship-test-instance --project internship-166-375809 --command 'docker system prune -f -a'
