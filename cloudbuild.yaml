@@ -40,5 +40,5 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute ssh --zone us-central1-a internship-test-instance --project internship-166-375809 --command 'docker system prune -f -a' &&
-        gcloud compute instances update-container internship-test-instance --zone us-central1-a --container-image us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app:2.1.1
+        gcloud compute ssh --zone us-central1-a internship-test-instance --project internship-166-375809 --command 'docker system prune -f -a &&
+        && docker run --rm -d -p 8000:8000 --name=test-go-app us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app:2.1.1'
