@@ -27,14 +27,14 @@ steps:
     #Docker build & push
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: /bin/bash
-    env:
-      - 'IMAGE_REPO_NAME'='us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app'
     args:
       - '-c'
       - |
         tag=$(cat /image_info_volume/file)
         docker build --file Dockerfile --tag $IMAGE_REPO_NAME${tag} --build-arg VERSION=${tag} . &&
         docker push $IMAGE_REPO_NAME${tag}
+    env:
+      - 'IMAGE_REPO_NAME'='us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app'
     volumes:
       - name: tag-info
         path: '/image_info_volume'
