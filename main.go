@@ -7,7 +7,7 @@ import (
 )
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
-    message := "Hello world! This app version is: " + os.Getenv("APP_VERSION")
+    message := "Hello world! This app version is" + os.Getenv("APP_VERSION")
 	io.WriteString(w, message)
 }
 
