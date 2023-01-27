@@ -40,18 +40,13 @@ steps:
     entrypoint: /bin/bash
     args:
       - '-c'
-      - |  
-        if [[ "$BRANCH_NAME" == "main" || "$BRANCH_NAME" == "dev" && -z "$TAG_NAME" ]] 
-        then
-          dateOfImage=$(date '+%d-%m-%Y')
-          tag=":$BRANCH_NAME-${dateOfImage}-$SHORT_SHA"
-          echo "Running on default branch '$BRANCH_NAME': tag = '${tag}'"
-        else
-          tag=":$TAG_NAME"
-          echo "Running on branch '$BRANCH_NAME': tag = $tag"
-        fi
+      - |
+        tag=$(cat /image_info_volume/file)
         docker build --file Dockerfile --tag us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app${tag} . &&
         docker push us-central1-docker.pkg.dev/$PROJECT_ID/internship-repo/test-go-app${tag}
+    volumes:
+      - name: tag-info
+        path: '/image_info_volume'
 
   #Deploy container
   - name: 'gcr.io/cloud-builders/gcloud'
