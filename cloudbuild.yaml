@@ -53,7 +53,7 @@ steps:
 
 substitutions:
   _VM_ZONE_NAME: 'us-central1-a'
-  _VM_INSTANCE_NAME: 'internship-test-instance'
+  _VM_INSTANCE_NAME: 'terraform-instance'
   _CONTAINER_PORT: '8000'
   _CONTAINER_NAME: 'test-go-app'
   _IMAGE_REPO_NAME: 'us-central1-docker.pkg.dev/${PROJECT_ID}/internship-repo/test-go-app'
