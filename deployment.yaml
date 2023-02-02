@@ -15,3 +15,5 @@ spec:
       containers:
         - name: test-go-app
           image: 'us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app'
+      imagePullSecrets:
+        - name: regcred
