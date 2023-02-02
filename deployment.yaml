@@ -6,12 +6,12 @@ spec:
   selector:
     matchLabels:
       app: test-go-app
-    replicas: 2
-    template:
-      metadata:
-        labels:
-          app: test-go-app
-      spec:
-        containers:
-          - name: test-go-app
-            image: 'us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app'
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: test-go-app
+    spec:
+      containers:
+        - name: test-go-app
+          image: 'us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app'
