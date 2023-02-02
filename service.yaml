@@ -5,9 +5,8 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    matchLabels:
-      app: test-go-app
-    ports:
-      - protocol: TCP
-        port: 8000
-        targetPort: 8000
+    app.kubernetes.io/name: test-go-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
