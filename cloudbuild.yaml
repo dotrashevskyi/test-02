@@ -37,23 +37,36 @@ steps:
       - name: tag-info
         path: '/image_info_volume'
 
-  #Deploy container
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: /bin/bash
+#  #Deploy container
+#  - name: 'gcr.io/cloud-builders/gcloud'
+#    entrypoint: /bin/bash
+#    args:
+#      - '-c'
+#      - |
+#        tag=$(cat /image_info_volume/file)
+#        gcloud compute ssh --zone ${_VM_ZONE_NAME} ${_VM_INSTANCE_NAME} --project $PROJECT_ID --command "docker system prune -f -a;
+#        docker stop ${_CONTAINER_NAME};
+#        docker run --rm -d -p ${_CONTAINER_PORT}:${_CONTAINER_PORT} --name=${_CONTAINER_NAME} '${_IMAGE_REPO_NAME}${tag}'"
+#    volumes:
+#      - name: tag-info
+#        path: '/image_info_volume'
+
+    #Deploy to GKE
+  - name: 'gcr.io/cloud-builders/gke-deploy'
     args:
-      - '-c'
-      - |
-        tag=$(cat /image_info_volume/file)
-        gcloud compute ssh --zone ${_VM_ZONE_NAME} ${_VM_INSTANCE_NAME} --project $PROJECT_ID --command "docker system prune -f -a;
-        docker stop ${_CONTAINER_NAME};
-        docker run --rm -d -p ${_CONTAINER_PORT}:${_CONTAINER_PORT} --name=${_CONTAINER_NAME} '${_IMAGE_REPO_NAME}${tag}'"
+      - run
+      - --filename='/kubernetes/deployment.yaml'
+      - --image='${_IMAGE_REPO_NAME}${tag}'
+      - --location='${_VM_ZONE_NAME}'
+      - --cluster='${_CLUSTER_NAME}'
     volumes:
       - name: tag-info
         path: '/image_info_volume'
 
 substitutions:
-  _VM_ZONE_NAME: 'us-central1-a'
+  _VM_ZONE_NAME: 'europe-west6-b'
   _VM_INSTANCE_NAME: 'terraform-instance'
+  _CLUSTER_NAME: 'internship-166-375809-prod-gke'
   _CONTAINER_PORT: '8000'
   _CONTAINER_NAME: 'test-go-app'
   _IMAGE_REPO_NAME: 'us-central1-docker.pkg.dev/${PROJECT_ID}/internship-repo/test-go-app'
