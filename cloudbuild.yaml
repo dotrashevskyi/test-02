@@ -54,11 +54,10 @@ steps:
     #Deploy to GKE
   - name: 'gcr.io/cloud-builders/gke-deploy'
     args:
-      - run
-      - --filename='/kubernetes/deployment.yaml'
-      - --image='${_IMAGE_REPO_NAME}$(cat /image_info_volume/file)'
-      - --location='${_VM_ZONE_NAME}'
-      - --cluster='${_CLUSTER_NAME}'
+      - '-c'
+      - |
+        tag=$(cat /image_info_volume/file)
+        gke-deploy run -f '/kubernetes/deployment.yaml' -i ${_IMAGE_REPO_NAME}${tag} -a test-go-app -v ${tag} -o expanded -c ${_CLUSTER_NAME} -l ${_VM_ZONE_NAME}
     volumes:
       - name: tag-info
         path: '/image_info_volume'
