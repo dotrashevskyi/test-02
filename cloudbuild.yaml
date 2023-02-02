@@ -53,6 +53,7 @@ steps:
 
     #Deploy to GKE
   - name: 'gcr.io/cloud-builders/gke-deploy'
+    entrypoint: /bin/bash
     args:
       - '-c'
       - |
