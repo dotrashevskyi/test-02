@@ -58,7 +58,7 @@ steps:
       - '-c'
       - |
         tag=$(cat /image_info_volume/file)
-        gke-deploy run -f 'deployment.yaml' -i ${_IMAGE_REPO_NAME}${tag} -a test-go-app -v 1.0.0 -o expanded -c ${_CLUSTER_NAME} -l ${_VM_ZONE_NAME}
+        gke-deploy run -f 'deployment.yaml' -i ${_IMAGE_REPO_NAME}${tag} -a test-go-app -v 1.0.0 -A name=hello-test-deployment -o expanded -c ${_CLUSTER_NAME} -l ${_VM_ZONE_NAME}
         gke-deploy run -f 'service.yaml'
     volumes:
       - name: tag-info
