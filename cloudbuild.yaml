@@ -60,6 +60,7 @@ steps:
         tag=$(cat /image_info_volume/file)
         gke-deploy run -f 'deployment-$BRANCH_NAME.yaml' -i ${_IMAGE_REPO_NAME}${tag} -a test-go-app-$BRANCH_NAME -v 1.0.0 -o expanded -c ${_CLUSTER_NAME} -l ${_VM_ZONE_NAME}
         gke-deploy run -f 'service-$BRANCH_NAME.yaml'
+        gke-deploy run -f 'ingress.yaml'
     volumes:
       - name: tag-info
         path: '/image_info_volume'
