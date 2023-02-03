@@ -74,9 +74,7 @@ steps:
         --for=condition=ready pod \
         --selector=app.kubernetes.io/component=controller \
         --timeout=120s
-        kubectl apply -f 'ingress.yaml'
-
-
+        kubectl apply -f 'ingress-$BRANCH_NAME.yaml'
 
 substitutions:
   _VM_ZONE_NAME: 'europe-west6-b'
