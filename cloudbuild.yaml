@@ -69,7 +69,7 @@ steps:
     args:
       - '-c'
       - |
-        gke-deploy run -f 'ingress.yaml' -o expanded
+        gke-deploy run -f 'ingress.yaml' -c ${_CLUSTER_NAME} -l ${_VM_ZONE_NAME}
 
 substitutions:
   _VM_ZONE_NAME: 'europe-west6-b'
