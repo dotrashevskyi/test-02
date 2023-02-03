@@ -67,7 +67,9 @@ steps:
   - name: 'gcr.io/cloud-builders/gke-deploy'
     entrypoint: /bin/bash
     args:
-      - gke-deploy run -f 'ingress.yaml'
+      - '-c'
+      - |
+        gke-deploy run -f 'ingress.yaml'
 
 substitutions:
   _VM_ZONE_NAME: 'europe-west6-b'
