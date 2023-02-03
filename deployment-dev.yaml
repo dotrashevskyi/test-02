@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-go-app-main-deployment
+  name: test-go-app-dev-deployment
 spec:
   selector:
     matchLabels:
-      app: test-go-app
+      app: test-go-app-dev
   replicas: 4
   template:
     metadata:
       labels:
-        app: test-go-app
+        app: test-go-app-dev
     spec:
       containers:
-        - name: test-go-app
+        - name: test-go-app-dev
           image: 'us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app'
       imagePullSecrets:
         - name: regcred
