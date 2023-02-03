@@ -69,7 +69,7 @@ steps:
     args:
       - '-c'
       - |
-        kubectl get pods
+        kubectl apply -f 'ingress.yaml'
 
 
 
