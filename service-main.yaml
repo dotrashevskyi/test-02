@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: app-service-main
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app.kubernetes.io/name: test-go-app-main
   ports:
