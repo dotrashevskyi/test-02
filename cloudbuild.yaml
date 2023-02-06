@@ -40,8 +40,12 @@ steps:
   #Delpoy via Helm
   - name: 'gcr.io/$PROJECT_ID/helm'
     args:
-      - |
-        helm upgrade -i my-go-app-test chart/ --set replicaCount=2
+      - upgrade
+      - --install
+      - my-go-app-test
+      - chart/
+      - --set
+      - replicaCount=2
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=europe-west6-b'
       - 'CLOUDSDK_CONTAINER_CLUSTER=internship-166-375809-prod-gke'
