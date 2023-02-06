@@ -60,7 +60,7 @@ steps:
         branch=$BRANCH_NAME
         tag=$(cat /image_info_volume/file)
         if [[ "$tag" =~ ^[0-9]+.[0-9]+.[0-9]+ ]]; then
-          branch='main'
+          branch=main
         else
           echo 'Skipping tag resolving, the tag is '$tag', the branch is '$branch' 
         fi
