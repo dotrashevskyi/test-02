@@ -5,7 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: test-go-app-main
+    app: my-go-app-main
   ports:
     - protocol: TCP
       port: 80

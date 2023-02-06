@@ -5,12 +5,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: test-go-app-main
+      app: my-go-app-main
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app: test-go-app-main
+        app: my-go-app-main
     spec:
       containers:
         - name: test-go-app-main
