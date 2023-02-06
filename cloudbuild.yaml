@@ -77,11 +77,10 @@ steps:
         --for=condition=ready pod \
         --selector=app.kubernetes.io/component=controller \
         --timeout=120s
-        kubectl apply -f '${_INFRA_DEPLOYMENT_DIR}/ingress-$BRANCH_NAME.yaml'
+        kubectl apply -f '${_APP_DEPLOYMENT_DIR}/ingress-$BRANCH_NAME.yaml'
 
 substitutions:
   _APP_DEPLOYMENT_DIR: './app-deployment'
-  _INFRA_DEPLOYMENT_DIR: './infrastructure-deployment'
   _VM_ZONE_NAME: 'europe-west6-b'
   _VM_INSTANCE_NAME: 'terraform-instance'
   _CLUSTER_NAME: 'internship-166-375809-prod-gke'
