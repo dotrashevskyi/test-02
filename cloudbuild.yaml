@@ -39,10 +39,16 @@ steps:
 
   #Delpoy via Helm
   - name: 'gcr.io/$PROJECT_ID/helm'
+    entrypoint: /bin/bash
     args:
-      - 'install'
-      - 'my-go-app-test'
-      - 'chart/'
+      - '-c'
+      - |
+      - tag=$(cat /image_info_volume/file)
+      - helm upgrade --install 'my-go-app-test' 'chart/' '--set container.image=us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app'${tag}
+#      - 'install'
+#      - 'my-go-app-test'
+#      - 'chart/'
+#      - '--set container.image=us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app'${tag}
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=europe-west6-b'
       - 'CLOUDSDK_CONTAINER_CLUSTER=internship-166-375809-prod-gke'
