@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: demo.localdev.me
+    - host: intership.itoutposts.ltd
       http:
         paths:
           - path: /main(/|$)(.*)
