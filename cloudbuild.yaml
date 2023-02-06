@@ -45,16 +45,9 @@ steps:
       - |
         tag=$(cat /image_info_volume/file)
         gcloud container clusters get-credentials --project=${PROJECT_ID} --zone=${_VM_ZONE_NAME} ${_CLUSTER_NAME}
+        echo "Running: helm repo update"
+        helm repo list && helm repo update || true
         helm upgrade --install my-go-app-test chart/ --set container.image=${_IMAGE_REPO_NAME}${tag}
-#      - upgrade
-#      - --install
-#      - my-go-app-test
-#      - chart/
-#      - --set
-#      - container.image=${_IMAGE_REPO_NAME}$_MY_VAR
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=europe-west6-b'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=internship-166-375809-prod-gke'
     volumes:
       - name: tag-info
         path: '/image_info_volume'
