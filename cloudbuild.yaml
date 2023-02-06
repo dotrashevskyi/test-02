@@ -43,8 +43,11 @@ steps:
       - 'install'
       - 'my-go-app-test'
       - 'chart/'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=europe-west6-b'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=internship-166-375809-prod-gke'
 
-#      #Deploy to GKE
+#     #Deploy to GKE
 #  - name: 'gcr.io/cloud-builders/gke-deploy'
 #    entrypoint: /bin/bash
 #    args:
