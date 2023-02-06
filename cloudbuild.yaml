@@ -2,7 +2,7 @@ steps:
   # Run linter for go project
   - name: golang:1.16
     env: ['GO111MODULE=off']
-    args: ['go', 'vet', './...']
+    args: ['go', 'vet', './src/...']
 
   #Calculate Docker image tag
   - name: 'gcr.io/cloud-builders/gcloud'
