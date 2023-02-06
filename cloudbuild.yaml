@@ -57,15 +57,8 @@ steps:
     args:
       - '-c'
       - |
-        branch_name=$BRANCH_NAME
-        tag=$(cat /image_info_volume/file)
-        if [[ "$tag" =~ ^[0-9]+.[0-9]+.[0-9]+ ]]; then
-          $branch_name='main'
-        else
-          echo 'Skipping tag resolving, the tag is '$tag', the branch is '$branch'' 
-        fi
-        gke-deploy run -f '${_APP_DEPLOYMENT_DIR}/deployment-${branch_name}.yaml' -i ${_IMAGE_REPO_NAME}${tag} -a test-go-app-${branch_name} -v 1.0.0 -o expanded -c ${_CLUSTER_NAME} -l ${_VM_ZONE_NAME}
-        gke-deploy run -f '$_APP_DEPLOYMENT_DIR/service-$branch.yaml'
+        gke-deploy run -f '${_APP_DEPLOYMENT_DIR}/deployment-$BRANCH_NAME.yaml' -i ${_IMAGE_REPO_NAME}${tag} -a test-go-app-$BRANCH_NAME -v 1.0.0 -o expanded -c ${_CLUSTER_NAME} -l ${_VM_ZONE_NAME}
+        gke-deploy run -f '$_APP_DEPLOYMENT_DIR/service-$BRANCH_NAME.yaml'
     volumes:
       - name: tag-info
         path: '/image_info_volume'
