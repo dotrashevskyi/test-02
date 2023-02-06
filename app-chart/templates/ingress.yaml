@@ -10,7 +10,7 @@ spec:
     - host: intership.itoutposts.ltd
       http:
         paths:
-          - path: /{{ .Values.ingress.path.prefix }}(/|$)(.*)
+          - path: /{{ .Values.path.prefix }}(/|$)(.*)
             pathType: Prefix
             backend:
               service:
