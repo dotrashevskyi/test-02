@@ -5,6 +5,5 @@ container:
 
 replicaCount: 4
 
-ingress:
-  path:
-    prefix: main
+path:
+  prefix: main
