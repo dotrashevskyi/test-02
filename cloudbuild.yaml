@@ -39,6 +39,7 @@ steps:
 
   #Delpoy via Helm
   - name: 'gcr.io/$PROJECT_ID/helm'
+    entrypoint: /bin/bash
     args:
       - '-c'
       - |
