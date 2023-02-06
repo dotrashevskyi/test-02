@@ -40,8 +40,7 @@ steps:
     #Delpoy via Helm
   - name: 'gcr.io/$PROJECT_ID/cloud-builders-helm'
     args:
-      - upgrade
-      - --install
+      - install
       - my-go-app-$BRANCH_NAME
       - 'chart/'
 
