@@ -37,12 +37,9 @@ steps:
       - name: tag-info
         path: '/image_info_volume'
 
-    #Delpoy via Helm
-  - name: 'gcr.io/$PROJECT_ID/helm:latest'
-    args:
-      - install
-      - my-go-app-$BRANCH_NAME
-      - 'chart/'
+  #Delpoy via Helm
+  - name: 'gcr.io/$PROJECT_ID/helm'
+    args: ['install', 'my-go-app-$BRANCH_NAME', 'chart/']
 
 #      #Deploy to GKE
 #  - name: 'gcr.io/cloud-builders/gke-deploy'
