@@ -5,15 +5,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-app
+      app: {{ .Release.Name }}
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-app
+        app: {{ .Release.Name }}
     spec:
       containers:
-        - name: {{ .Release.Name }}-app
+        - name: {{ .Release.Name }}
           image: {{ .Values.container.image }}
       imagePullSecrets:
         - name: regcred
