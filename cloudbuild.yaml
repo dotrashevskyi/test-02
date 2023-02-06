@@ -39,7 +39,10 @@ steps:
 
   #Delpoy via Helm
   - name: 'gcr.io/$PROJECT_ID/helm'
-    args: ['install', 'my-go-app-$BRANCH_NAME', 'chart/']
+    args:
+      - 'install'
+      - 'my-go-app-test'
+      - 'chart/'
 
 #      #Deploy to GKE
 #  - name: 'gcr.io/cloud-builders/gke-deploy'
