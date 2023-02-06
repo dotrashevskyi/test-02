@@ -38,7 +38,7 @@ steps:
         path: '/image_info_volume'
 
     #Delpoy via Helm
-  - name: 'gcr.io/$PROJECT_ID/cloud-builders-helm'
+  - name: 'gcr.io/$PROJECT_ID/helm:latest'
     args:
       - install
       - my-go-app-$BRANCH_NAME
