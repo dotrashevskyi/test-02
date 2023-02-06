@@ -69,12 +69,6 @@ steps:
     args:
       - '-c'
       - |
-        branch=$BRANCH_NAME
-        if [[ "$tag" =~ ^[0-9]+.[0-9]+.[0-9]+ ]]; then
-          $branch=main
-        else
-          echo 'Skipping tag resolving, the tag is '$tag', the branch is '$branch'' 
-        fi
         kubectl create clusterrolebinding cluster-admin-binding \
         --clusterrole cluster-admin \
         --user $(gcloud config get-value account)
@@ -83,7 +77,7 @@ steps:
         --for=condition=ready pod \
         --selector=app.kubernetes.io/component=controller \
         --timeout=120s
-        kubectl apply -f '${_INFRA_DEPLOYMENT_DIR}/ingress-${branch}.yaml'
+        kubectl apply -f '${_INFRA_DEPLOYMENT_DIR}/ingress-$BRANCH_NAME.yaml'
 
 substitutions:
   _APP_DEPLOYMENT_DIR: './app-deployment'
