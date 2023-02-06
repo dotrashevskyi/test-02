@@ -38,18 +38,21 @@ steps:
         path: '/image_info_volume'
 
   #Delpoy via Helm
-  - name: 'gcr.io/$PROJECT_ID/helm'
-#    entrypoint: /bin/bash
+  - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: /bin/bash
     args:
-      - upgrade
-      - -i
-      - my-go-app-test
-      - chart/
-      - --set replicaCount=2
+      - '-c'
+      - |
+        helm list
+#      - upgrade
+#      - -i
+#      - my-go-app-test
+#      - chart/
+#      - --set replicaCount=2
 #      - '--set container.image=us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app'$(cat /image_info_volume/file)
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=europe-west6-b'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=internship-166-375809-prod-gke'
+#    env:
+#      - 'CLOUDSDK_COMPUTE_ZONE=europe-west6-b'
+#      - 'CLOUDSDK_CONTAINER_CLUSTER=internship-166-375809-prod-gke'
     volumes:
       - name: tag-info
         path: '/image_info_volume'
