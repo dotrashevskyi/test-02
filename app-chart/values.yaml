@@ -5,5 +5,8 @@ container:
 
 replicaCount: 4
 
+branch:
+  name: main
+
 path:
   prefix: main
