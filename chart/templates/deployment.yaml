@@ -13,7 +13,7 @@ spec:
         app: {{ .Release.Name }}-app
     spec:
       containers:
-        - name: {{ .Release.Name }}-test-go-app
+        - name: {{ .Release.Name }}-app
           image: {{ .Values.container.image }}
       imagePullSecrets:
         - name: regcred
