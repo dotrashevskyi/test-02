@@ -39,13 +39,12 @@ steps:
 
   #Delpoy via Helm
   - name: 'gcr.io/$PROJECT_ID/helm'
-    entrypoint: /bin/bash
+#    entrypoint: /bin/bash
     args:
-      - '-c'
-      - |
-      - tag=$(cat /image_info_volume/file)
-      - echo 'Using tag - '$tag''
-      - helm list
+      - list
+#      - tag=$(cat /image_info_volume/file)
+#      - echo 'Using tag - '$tag''
+#      - helm list
 #      - helm upgrade -i my-go-app-test chart/ --set container.image=us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app${tag}
 #      - 'install'
 #      - 'my-go-app-test'
