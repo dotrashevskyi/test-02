@@ -41,18 +41,19 @@ steps:
   - name: 'gcr.io/$PROJECT_ID/helm'
 #    entrypoint: /bin/bash
     args:
-      - list
+      - upgrade
 #      - tag=$(cat /image_info_volume/file)
-#      - echo 'Using tag - '$tag''
-#      - helm list
 #      - helm upgrade -i my-go-app-test chart/ --set container.image=us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app${tag}
-#      - 'install'
-#      - 'my-go-app-test'
-#      - 'chart/'
-#      - '--set container.image=us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app'${tag}
+      - 'install'
+      - 'my-go-app-test'
+      - 'chart/'
+      - '--set container.image=us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app'$(cat /image_info_volume/file)
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=europe-west6-b'
       - 'CLOUDSDK_CONTAINER_CLUSTER=internship-166-375809-prod-gke'
+    volumes:
+      - name: tag-info
+        path: '/image_info_volume'
 
 #     #Deploy to GKE
 #  - name: 'gcr.io/cloud-builders/gke-deploy'
