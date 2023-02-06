@@ -5,15 +5,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: test-go-app-main
+      app: {{ .Release.Name }}
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app: test-go-app-main
+        app: {{ .Release.Name }}
     spec:
       containers:
-        - name: test-go-app-main
+        - name: {{ .Release.Name }}
           image: {{ .Values.container.image }}
       imagePullSecrets:
         - name: regcred
