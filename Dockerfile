@@ -7,7 +7,7 @@ ENV GO111MODULE=off
 
 WORKDIR /app
 
-COPY ../src/main.go ./
+COPY src/main.go ./
 
 RUN go build -o app
 
