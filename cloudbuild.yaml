@@ -43,8 +43,8 @@ steps:
     args:
       - '-c'
       - |
-        helm version
-#      - upgrade
+        helm upgrade -i my-go-app-test chart/ --set replicaCount=2
+    #      - upgrade
 #      - --install
 #      - my-go-app-test
 #      - chart/
