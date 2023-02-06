@@ -44,7 +44,7 @@ steps:
       - '-c'
       - |
         tag=$(cat /image_info_volume/file)
-        gcloud container clusters get-credentials --project="$project" --zone=${_VM_ZONE_NAME} ${_CLUSTER_NAME}
+        gcloud container clusters get-credentials --project=${PROJECT_ID} --zone=${_VM_ZONE_NAME} ${_CLUSTER_NAME}
         helm upgrade --install my-go-app-test chart/ --set container.image=${_IMAGE_REPO_NAME}${tag}
 #      - upgrade
 #      - --install
