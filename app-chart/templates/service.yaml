@@ -5,7 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: {{ .Release.Name }}-{{ .Values.branch.name}}
+    app: {{ .Release.Name }}
   ports:
     - protocol: TCP
       port: 80

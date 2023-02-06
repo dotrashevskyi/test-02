@@ -48,8 +48,7 @@ steps:
         echo "Running: helm repo update"
         helm repo list && helm repo update || true
         helm upgrade --install my-go-app-$BRANCH_NAME app-chart/ --set container.image=${_IMAGE_REPO_NAME}${tag} \
-        --set path.prefix=$BRANCH_NAME \
-        --set branch.name=$BRANCH_NAME
+        --set path.prefix=$BRANCH_NAME
     volumes:
       - name: tag-info
         path: '/image_info_volume'
