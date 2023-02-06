@@ -39,10 +39,10 @@ steps:
 
   #Delpoy via Helm
   - name: 'gcr.io/$PROJECT_ID/helm'
-    entrypoint: helm
     args:
+      - '-c'
       - |
-        list
+        helm list
 #      - upgrade
 #      - --install
 #      - my-go-app-test
