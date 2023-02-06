@@ -45,11 +45,11 @@ steps:
       - my-go-app-test
       - chart/
       - --set
-      - container.image=${_IMAGE_REPO_NAME}$TAG
+      - container.image=${_IMAGE_REPO_NAME}$_MY_VAR
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=europe-west6-b'
       - 'CLOUDSDK_CONTAINER_CLUSTER=internship-166-375809-prod-gke'
-      - 'TAG=$(cat /image_info_volume/file)'
+      - 'MY_VAR=$(cat /image_info_volume/file)'
     volumes:
       - name: tag-info
         path: '/image_info_volume'
