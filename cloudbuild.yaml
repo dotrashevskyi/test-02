@@ -37,47 +37,41 @@ steps:
       - name: tag-info
         path: '/image_info_volume'
 
-#  #Deploy container
-#  - name: 'gcr.io/cloud-builders/gcloud'
+    #Delpoy via Helm
+  - name: 'gcr.io/$PROJECT_ID/cloud-builders-helm'
+    args:
+      - upgrade
+      - --install
+      - my-go-app-$BRANCH_NAME
+      - 'chart/'
+
+#      #Deploy to GKE
+#  - name: 'gcr.io/cloud-builders/gke-deploy'
 #    entrypoint: /bin/bash
 #    args:
 #      - '-c'
 #      - |
 #        tag=$(cat /image_info_volume/file)
-#        gcloud compute ssh --zone ${_VM_ZONE_NAME} ${_VM_INSTANCE_NAME} --project $PROJECT_ID --command "docker system prune -f -a;
-#        docker stop ${_CONTAINER_NAME};
-#        docker run --rm -d -p ${_CONTAINER_PORT}:${_CONTAINER_PORT} --name=${_CONTAINER_NAME} '${_IMAGE_REPO_NAME}${tag}'"
+#        gke-deploy run -f '${_APP_DEPLOYMENT_DIR}/deployment-$BRANCH_NAME.yaml' -i ${_IMAGE_REPO_NAME}${tag} -a test-go-app-$BRANCH_NAME -v 1.0.0 -o expanded -c ${_CLUSTER_NAME} -l ${_VM_ZONE_NAME}
+#        gke-deploy run -f '$_APP_DEPLOYMENT_DIR/service-$BRANCH_NAME.yaml'
 #    volumes:
 #      - name: tag-info
 #        path: '/image_info_volume'
-
-    #Deploy to GKE
-  - name: 'gcr.io/cloud-builders/gke-deploy'
-    entrypoint: /bin/bash
-    args:
-      - '-c'
-      - |
-        tag=$(cat /image_info_volume/file)
-        gke-deploy run -f '${_APP_DEPLOYMENT_DIR}/deployment-$BRANCH_NAME.yaml' -i ${_IMAGE_REPO_NAME}${tag} -a test-go-app-$BRANCH_NAME -v 1.0.0 -o expanded -c ${_CLUSTER_NAME} -l ${_VM_ZONE_NAME}
-        gke-deploy run -f '$_APP_DEPLOYMENT_DIR/service-$BRANCH_NAME.yaml'
-    volumes:
-      - name: tag-info
-        path: '/image_info_volume'
-
-  - name: 'gcr.io/cloud-builders/kubectl'
-    entrypoint: /bin/bash
-    args:
-      - '-c'
-      - |
-        kubectl create clusterrolebinding cluster-admin-binding \
-        --clusterrole cluster-admin \
-        --user $(gcloud config get-value account)
-        kubectl apply -f 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml'
-        kubectl wait --namespace ingress-nginx \
-        --for=condition=ready pod \
-        --selector=app.kubernetes.io/component=controller \
-        --timeout=120s
-        kubectl apply -f '${_APP_DEPLOYMENT_DIR}/ingress-$BRANCH_NAME.yaml'
+#
+#  - name: 'gcr.io/cloud-builders/kubectl'
+#    entrypoint: /bin/bash
+#    args:
+#      - '-c'
+#      - |
+#        kubectl create clusterrolebinding cluster-admin-binding \
+#        --clusterrole cluster-admin \
+#        --user $(gcloud config get-value account)
+#        kubectl apply -f 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml'
+#        kubectl wait --namespace ingress-nginx \
+#        --for=condition=ready pod \
+#        --selector=app.kubernetes.io/component=controller \
+#        --timeout=120s
+#        kubectl apply -f '${_APP_DEPLOYMENT_DIR}/ingress-$BRANCH_NAME.yaml'
 
 substitutions:
   _APP_DEPLOYMENT_DIR: './app-deployment'
