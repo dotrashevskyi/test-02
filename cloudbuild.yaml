@@ -41,11 +41,11 @@ steps:
   - name: 'gcr.io/$PROJECT_ID/helm'
 #    entrypoint: /bin/bash
     args:
-      - 'upgrade'
-      - '--install'
-      - 'my-go-app-test'
-      - 'chart/'
-      - '--set container.image=us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app'$(cat /image_info_volume/file)
+      - upgrade
+      - i
+      - my-go-app-test
+      - chart/
+#      - '--set container.image=us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app'$(cat /image_info_volume/file)
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=europe-west6-b'
       - 'CLOUDSDK_CONTAINER_CLUSTER=internship-166-375809-prod-gke'
