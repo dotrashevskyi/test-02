@@ -43,7 +43,7 @@ steps:
     args:
       - '-c'
       - |
-        helm list
+        helm version
 #      - upgrade
 #      - --install
 #      - my-go-app-test
