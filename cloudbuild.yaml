@@ -51,9 +51,21 @@ steps:
         kubectl wait --namespace ingress-nginx \
         --for=condition=ready pod \
         --selector=app.kubernetes.io/component=controller \
-        --timeout=120s    
+        --timeout=120s
 
-  #Delpoy via Helm
+#  #Deploy Ingress Controller via Helm
+#  - name: 'gcr.io/$PROJECT_ID/helm'
+#    entrypoint: /bin/bash
+#    args:
+#      - '-c'
+#      - |
+#        gcloud container clusters get-credentials --project=${PROJECT_ID} --zone=${_VM_ZONE_NAME} ${_CLUSTER_NAME}
+#        helm upgrade --install ingress-nginx ingress-nginx \
+#        --repo https://kubernetes.github.io/ingress-nginx \
+#        --namespace ingress-nginx --create-namespace
+        
+
+  #Delpoy APP via Helm
   - name: 'gcr.io/$PROJECT_ID/helm'
     entrypoint: /bin/bash
     args:
@@ -63,8 +75,7 @@ steps:
         gcloud container clusters get-credentials --project=${PROJECT_ID} --zone=${_VM_ZONE_NAME} ${_CLUSTER_NAME}
         echo "Running: helm repo update"
         helm repo list && helm repo update || true
-        helm upgrade --install my-go-app-$BRANCH_NAME app-chart/ --set container.image=${_IMAGE_REPO_NAME}${tag} \
-        --set path.prefix=$BRANCH_NAME
+        helm upgrade --install my-go-app-$BRANCH_NAME app-chart/ --set container.image=${_IMAGE_REPO_NAME}${tag},path.prefix=$BRANCH_NAME
     volumes:
       - name: tag-info
         path: '/image_info_volume'
