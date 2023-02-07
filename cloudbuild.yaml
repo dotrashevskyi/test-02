@@ -38,20 +38,20 @@ steps:
         path: '/image_info_volume'
 
 
-  - name: 'gcr.io/cloud-builders/kubectl'
-    entrypoint: /bin/bash
-    args:
-      - '-c'
-      - |
-        gcloud container clusters get-credentials --project=${PROJECT_ID} --zone=${_VM_ZONE_NAME} ${_CLUSTER_NAME}
-        kubectl create clusterrolebinding cluster-admin-binding \
-        --clusterrole cluster-admin \
-        --user $(gcloud config get-value account)
-        kubectl apply -f 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml'
-        kubectl wait --namespace ingress-nginx \
-        --for=condition=ready pod \
-        --selector=app.kubernetes.io/component=controller \
-        --timeout=120s
+#  - name: 'gcr.io/cloud-builders/kubectl'
+#    entrypoint: /bin/bash
+#    args:
+#      - '-c'
+#      - |
+#        gcloud container clusters get-credentials --project=${PROJECT_ID} --zone=${_VM_ZONE_NAME} ${_CLUSTER_NAME}
+#        kubectl create clusterrolebinding cluster-admin-binding \
+#        --clusterrole cluster-admin \
+#        --user $(gcloud config get-value account)
+#        kubectl apply -f 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml'
+#        kubectl wait --namespace ingress-nginx \
+#        --for=condition=ready pod \
+#        --selector=app.kubernetes.io/component=controller \
+#        --timeout=120s
 
 #  #Deploy Ingress Controller via Helm
 #  - name: 'gcr.io/$PROJECT_ID/helm'
@@ -65,20 +65,20 @@ steps:
 #        --namespace ingress-nginx --create-namespace
         
 
-  #Delpoy APP via Helm
-  - name: 'gcr.io/$PROJECT_ID/helm'
-    entrypoint: /bin/bash
-    args:
-      - '-c'
-      - |
-        tag=$(cat /image_info_volume/file)
-        gcloud container clusters get-credentials --project=${PROJECT_ID} --zone=${_VM_ZONE_NAME} ${_CLUSTER_NAME}
-        echo "Running: helm repo update"
-        helm repo list && helm repo update || true
-        helm upgrade --install my-go-app-$BRANCH_NAME app-chart/ --set container.image=${_IMAGE_REPO_NAME}${tag},path.prefix=$BRANCH_NAME
-    volumes:
-      - name: tag-info
-        path: '/image_info_volume'
+#  #Delpoy APP via Helm
+#  - name: 'gcr.io/$PROJECT_ID/helm'
+#    entrypoint: /bin/bash
+#    args:
+#      - '-c'
+#      - |
+#        tag=$(cat /image_info_volume/file)
+#        gcloud container clusters get-credentials --project=${PROJECT_ID} --zone=${_VM_ZONE_NAME} ${_CLUSTER_NAME}
+#        echo "Running: helm repo update"
+#        helm repo list && helm repo update || true
+#        helm upgrade --install my-go-app-$BRANCH_NAME app-chart/ --set container.image=${_IMAGE_REPO_NAME}${tag},path.prefix=$BRANCH_NAME
+#    volumes:
+#      - name: tag-info
+#        path: '/image_info_volume'
 
 substitutions:
   _APP_DEPLOYMENT_DIR: './app-deployment'
