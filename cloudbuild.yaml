@@ -43,6 +43,7 @@ steps:
     args:
       - '-c'
       - |
+        gcloud container clusters get-credentials --project=${PROJECT_ID} --zone=${_VM_ZONE_NAME} ${_CLUSTER_NAME}
         kubectl create clusterrolebinding cluster-admin-binding \
         --clusterrole cluster-admin \
         --user $(gcloud config get-value account)
