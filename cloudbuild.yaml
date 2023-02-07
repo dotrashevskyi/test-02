@@ -37,6 +37,21 @@ steps:
       - name: tag-info
         path: '/image_info_volume'
 
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: /bin/bash
+    args:
+      - '-c'
+      - |
+        kubectl create clusterrolebinding cluster-admin-binding \
+        --clusterrole cluster-admin \
+        --user $(gcloud config get-value account)
+        kubectl apply -f 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml'
+        kubectl wait --namespace ingress-nginx \
+        --for=condition=ready pod \
+        --selector=app.kubernetes.io/component=controller \
+        --timeout=120s    
+
   #Delpoy via Helm
   - name: 'gcr.io/$PROJECT_ID/helm'
     entrypoint: /bin/bash
@@ -52,21 +67,6 @@ steps:
     volumes:
       - name: tag-info
         path: '/image_info_volume'
-
-#  - name: 'gcr.io/cloud-builders/kubectl'
-#    entrypoint: /bin/bash
-#    args:
-#      - '-c'
-#      - |
-#        kubectl create clusterrolebinding cluster-admin-binding \
-#        --clusterrole cluster-admin \
-#        --user $(gcloud config get-value account)
-#        kubectl apply -f 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml'
-#        kubectl wait --namespace ingress-nginx \
-#        --for=condition=ready pod \
-#        --selector=app.kubernetes.io/component=controller \
-#        --timeout=120s
-#        kubectl apply -f '${_APP_DEPLOYMENT_DIR}/ingress-$BRANCH_NAME.yaml'
 
 substitutions:
   _APP_DEPLOYMENT_DIR: './app-deployment'
