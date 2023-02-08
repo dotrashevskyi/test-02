@@ -1,9 +1,0 @@
-# Default values
-
-container:
-  image: 'us-central1-docker.pkg.dev/internship-166-375809/internship-repo/test-go-app:4.0.0'
-
-replicaCount: 4
-
-path:
-  prefix: main
