@@ -19,5 +19,5 @@ jobs:
           aws-region: eu-west-3
 
       - name: Login
-        id: login ecr
+        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
