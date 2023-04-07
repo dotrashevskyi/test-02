@@ -12,8 +12,8 @@ jobs:
       - name: Set short sha
         id: vars
         run: |
-          sha=${{ github.sha }}
-          result=echo ${$sha:0:8} >> GITHUB_OUTPUT
+          sha="${{ github.sha }}"
+          echo ${$sha:0:8} >> GITHUB_OUTPUT
       - name: Check outputs
         run: echo ${{ steps.vars.outputs.sha_short }}
         
