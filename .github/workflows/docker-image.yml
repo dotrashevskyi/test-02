@@ -27,7 +27,7 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: hello_repo
-          IMAGE_TAG: ${{ github.ref_name }}-$(echo ${{ github.sha }} | cut -c 1-8)
+          IMAGE_TAG: ${{ github.ref_name }}-${{ github.sha }} | cut -c 1-8
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
