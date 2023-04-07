@@ -10,7 +10,7 @@ jobs:
       contents: read
     steps:
       - name: List of the GitHub Actions environment variables
-        run: env
+        run: echo ${{github}}
         
       - name: Checkout repo
         uses: actions/checkout@v3
