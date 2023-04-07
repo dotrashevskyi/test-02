@@ -9,8 +9,8 @@ jobs:
       id-token: write
       contents: read
     steps:
-#       - name: List of the GitHub Actions environment variables
-#         run: echo ${{ toJson(github) }}
+      - name: List of the GitHub Actions environment variables
+        run: env
         
       - name: Checkout repo
         uses: actions/checkout@v3
