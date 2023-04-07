@@ -35,7 +35,7 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: hello_repo
-          IMAGE_TAG: ${{ github.ref_name }}-${{ steps.vars.outputs.date }}-${{ steps.vars.outputs.sha_short }}
+          IMAGE_TAG: ${{ steps.vars.outputs.date }}-${{ github.ref_name }}-${{ steps.vars.outputs.sha_short }}
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
