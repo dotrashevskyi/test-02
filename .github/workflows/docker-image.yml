@@ -9,11 +9,15 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - name: Get short SHA
-        run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
-
-      - name: Print short SHA
-        run: echo "Short SHA is ${{ env.SHORT_SHA }}"
+      - name: Test 
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+  
+      - name: Another step
+        run: |
+          echo "Branch: ${{ steps.vars.outputs.branch }}"
+          echo "Sha: ${{ steps.vars.outputs.sha_short }}"
         
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -32,7 +36,7 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: hello_repo
-          IMAGE_TAG: ${{ github.ref_name }}-${{ env.SHORT_SHA }}
+          IMAGE_TAG: ${{ github.ref_name }}-${{ steps.vars.outputs.sha_short }}
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
