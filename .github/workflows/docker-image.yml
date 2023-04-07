@@ -12,6 +12,14 @@ jobs:
       - name: List of the GitHub Actions environment variables
         run: env
         
+      - name: short sha calculation
+        run: |
+          calculatedSha=$(git rev-parse --short ${{ github.sha }})
+          echo "::set-output name=short_sha::$calculatedSha"
+
+      - name: Confirm git commit SHA output
+        run: echo ${{ steps.vars.outputs.short_sha }}  
+        
       - name: Checkout repo
         uses: actions/checkout@v3
 
@@ -29,7 +37,7 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: hello_repo
-          IMAGE_TAG: ${{ github.ref_name }}-${{ env.SHORT_SHA }}
+          IMAGE_TAG: ${{ github.ref_name }}-${{ steps.vars.outputs.short_sha }}
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
