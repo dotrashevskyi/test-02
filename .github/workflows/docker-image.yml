@@ -12,10 +12,10 @@ jobs:
       - name: Set short sha
         id: vars
         run: |
-          sha_short=${{ github.sha }}
-          echo "SHORT_SHA = $sha_short | cut -c 1-8" >> GITHUB_ENV
+          sha=${{ github.sha }}
+          echo "sha_short=$sha | cut -c 1-8" >> $GITHUB_OUTPUT
       - name: Check outputs
-        run: echo ${{ env.SHORT_SHA }}
+        run: echo ${{ steps.vars.outputs.sha_short }}
         
       - name: Checkout repo
         uses: actions/checkout@v3
