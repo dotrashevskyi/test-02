@@ -13,7 +13,7 @@ jobs:
         id: vars
         run: |
           sha_short=${{ github.sha }}
-          echo sha_short | cut -c 1-8 >> GITHUB_OUTPUT
+          echo SHORT_SHA = $sha_short | cut -c 1-8 >> GITHUB_ENV
       - name: Check outputs
         run: echo ${{ steps.vars.outputs.sha_short }}
         
@@ -34,7 +34,7 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: hello_repo
-          IMAGE_TAG: ${{ github.ref_name }}-${{ github.sha_short }}
+          IMAGE_TAG: ${{ github.ref_name }}-${{ env.SHORT_SHA }}
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
