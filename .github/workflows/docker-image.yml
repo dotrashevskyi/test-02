@@ -11,7 +11,10 @@ jobs:
     steps:
       - name: vars
         id: vars
-        run: echo "date=$(date '+%Y-%m-%d_%H-%M')" >> $GITHUB_OUTPUT
+        run: | 
+          echo "date=$(date '+%Y-%m-%d_%H-%M')" >> $GITHUB_OUTPUT
+          echo "sha_short=${{ github.sha }} | cut -c 1-8" >> $GITHUB_OUTPUT
+          
       - name: Checkout repo
         uses: actions/checkout@v3
 
@@ -29,7 +32,7 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: hello_repo
-          IMAGE_TAG: ${{ github.ref_name }}-${{ steps.vars.outputs.date }}-${{ github.sha }}
+          IMAGE_TAG: ${{ github.ref_name }}-${{ steps.vars.outputs.date }}-${{ steps.vars.outputs.sha_short }}
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
