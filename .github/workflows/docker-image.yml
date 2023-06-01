@@ -14,7 +14,8 @@ jobs:
     steps:
       - name: vars
         id: vars
-        run: | 
+        run: |
+          echo "date=$(date '+%s')"
           echo "date=$(date '+%Y-%m-%d_%H-%M')" >> $GITHUB_OUTPUT
           echo "sha_short=$(echo ${{ github.sha }} | cut -c 1-8)" >> $GITHUB_OUTPUT
           
